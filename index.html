@@ -229,7 +229,17 @@ function moveButton(){
 }
 
 no.addEventListener("mouseover", moveButton);
-no.addEventListener("click", moveButton);
+
+no.addEventListener("touchstart", function(e){
+    e.preventDefault();
+    moveButton();
+}, { passive: false });
+
+no.addEventListener("click", function(e){
+    e.preventDefault();
+    e.stopPropagation();
+    moveButton();
+});
 
 // ---------- Balloon ----------
 function createBalloons(){
