@@ -1,22 +1,30 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Do You Love Me ❤️</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-    <style>
-       *{
+<title>Do You Love Me ❤️</title>
+
+<style>
+
+*{
     margin:0;
     padding:0;
     box-sizing:border-box;
     font-family:Arial,sans-serif;
 }
 
-body{
-    background:#ffdbe8;
+html,body{
+    width:100%;
+    height:100%;
     overflow:hidden;
 }
+
+body{
+    background:#ffdbe8;
+}
+
 
 .screen{
     width:100%;
@@ -25,18 +33,28 @@ body{
     flex-direction:column;
     justify-content:center;
     align-items:center;
+    padding:20px;
 }
+
 
 #animation,
 #result{
     display:none;
 }
 
+
+/* Video */
+
 .bear{
-    width:220px;
-    border-radius:15px;
+    width:min(220px,70vw);
+    max-height:300px;
+    object-fit:cover;
+    border-radius:20px;
     margin-bottom:20px;
 }
+
+
+/* Heading */
 
 h1{
     color:#444;
@@ -45,366 +63,771 @@ h1{
     text-align:center;
 }
 
+
+/* Buttons */
+
 .btns{
     display:flex;
     gap:20px;
-    position:relative;
+    align-items:center;
+    justify-content:center;
 }
 
+
 button{
+
     border:none;
-    border-radius:40px;
+    border-radius:50px;
     padding:14px 35px;
     font-size:20px;
     cursor:pointer;
+
     transition:.3s;
+
     user-select:none;
     -webkit-user-select:none;
+
     touch-action:none;
+
 }
+
 
 #yes{
+
     background:#ff5d8f;
     color:white;
-    z-index:1;
+    z-index:10;
+
 }
 
-#yes:hover{
-    transform:scale(1.08);
+
+#yes:active{
+    transform:scale(0.95);
 }
+
+
 
 #no{
+
     background:#ff3b61;
     color:white;
+
     position:fixed;
-    left:58%;
-    top:62%;
+
+    left:60%;
+    top:65%;
+
     z-index:9999;
+
 }
 
-/* Animation Screen */
+
+
+/* Animation */
 
 #animation{
+
+    position:relative;
     background:#ffdbe8;
+
 }
+
+
 
 #bigHeart{
-    font-size:40px;
+
+    font-size:50px;
     opacity:0;
+
 }
 
+
 .showHeart{
+
     animation:heartGrow 2s forwards;
+
 }
+
+
 
 @keyframes heartGrow{
 
+
 0%{
+
 transform:scale(0);
 opacity:0;
+
 }
+
 
 20%{
+
 opacity:1;
 transform:scale(1);
+
 }
+
 
 50%{
+
 transform:scale(2);
+
 }
+
 
 100%{
+
 transform:scale(5);
 opacity:0;
-}
 
 }
+
+
+}
+
 
 /* Balloons */
 
 #balloons{
-    position:absolute;
-    inset:0;
-    overflow:hidden;
-    pointer-events:none;
+
+position:absolute;
+width:100%;
+height:100%;
+overflow:hidden;
+
+pointer-events:none;
+
 }
 
+
 .balloon{
-    position:absolute;
-    bottom:-100px;
-    font-size:42px;
-    animation:flyUp linear forwards;
+
+position:absolute;
+
+bottom:-100px;
+
+font-size:42px;
+
+animation:flyUp linear forwards;
+
 }
+
+
 
 @keyframes flyUp{
 
+
 0%{
+
 transform:translateY(0);
 opacity:1;
+
 }
+
 
 100%{
+
 transform:translateY(-120vh);
 opacity:0;
-}
 
 }
 
+}
 /* Fireworks */
 
 #fireworks{
-    position:absolute;
-    left:0;
-    top:0;
-    width:100%;
-    height:100%;
-    pointer-events:none;
+
+position:absolute;
+
+left:0;
+top:0;
+
+width:100%;
+height:100%;
+
+pointer-events:none;
+
 }
+
+
 
 /* Result */
 
 #result{
-    animation:zoom .7s ease;
+
+animation:zoom .7s ease;
+
 }
+
+
 
 @keyframes zoom{
 
+
 0%{
+
 transform:scale(.3);
 opacity:0;
+
 }
+
 
 100%{
+
 transform:scale(1);
 opacity:1;
-}
 
 }
+
+
+}
+
+
+
+/* Mobile Fix */
 
 @media(max-width:600px){
 
-.bear{
-width:180px;
-}
 
 h1{
+
 font-size:30px;
+
 }
+
+
+.bear{
+
+width:180px;
+
+}
+
 
 button{
+
 font-size:18px;
+
 padding:12px 28px;
+
 }
 
-} 
-    </style>
+
+.btns{
+
+gap:15px;
+
+}
+
+
+}
+
+
+
+/* Small Mobile */
+
+@media(max-width:380px){
+
+
+h1{
+
+font-size:26px;
+
+}
+
+
+button{
+
+padding:10px 22px;
+
+font-size:16px;
+
+}
+
+
+}
+
+
+
+</style>
+
 </head>
+
+
 <body>
 
+
+
 <!-- Question Screen -->
+
 <div id="question" class="screen">
 
-    <video class="bear" autoplay muted loop playsinline>
-        <source src="bear1.mp4" type="video/mp4">
-    </video>
 
-    <h1>Do You Love Me? ❤️</h1>
+<video class="bear" autoplay muted loop playsinline>
 
-    <div class="btns">
-        <button id="yes">Yes ❤️</button>
-        <button id="no">No 💔</button>
-    </div>
+<source src="bear1.mp4" type="video/mp4">
+
+</video>
+
+
+
+<h1>
+
+Do You Love Me? ❤️
+
+</h1>
+
+
+
+<div class="btns">
+
+
+<button id="yes">
+
+Yes ❤️
+
+</button>
+
+
+
+<button id="no">
+
+No 💔
+
+</button>
+
 
 </div>
+
+
+</div>
+
+
+
 
 <!-- Animation Screen -->
 
+
 <div id="animation" class="screen">
 
-    <div id="bigHeart">❤️</div>
 
-    <div id="balloons"></div>
+<div id="bigHeart">
 
-    <canvas id="fireworks"></canvas>
+❤️
 
 </div>
+
+
+
+<div id="balloons"></div>
+
+
+<canvas id="fireworks"></canvas>
+
+
+
+</div>
+
+
+
 
 <!-- Result Screen -->
 
+
 <div id="result" class="screen">
 
-    <video class="bear" autoplay muted loop playsinline>
-        <source src="bear2.mp4" type="video/mp4">
-    </video>
 
-    <h1>I Knew It Nehuu! 😍❤️</h1>
+<video class="bear" autoplay muted loop playsinline>
+
+
+<source src="bear2.mp4" type="video/mp4">
+
+
+</video>
+
+
+
+<h1>
+
+I Knew It Nehuu! 😍❤️
+
+</h1>
+
 
 </div>
 
+
+
 <script>
-const yes = document.getElementById("yes");
-const no = document.getElementById("no");
 
-const question = document.getElementById("question");
-const animation = document.getElementById("animation");
-const result = document.getElementById("result");
 
-const bigHeart = document.getElementById("bigHeart");
-const balloons = document.getElementById("balloons");
 
-// ----------------------
-// No Button Move (Mobile + Desktop)
-// ----------------------
+const yes=document.getElementById("yes");
+
+const no=document.getElementById("no");
+
+
+const question=document.getElementById("question");
+
+const animation=document.getElementById("animation");
+
+const result=document.getElementById("result");
+
+
+const bigHeart=document.getElementById("bigHeart");
+
+const balloons=document.getElementById("balloons");
+
+
+
+
+
+// =====================
+// NO BUTTON MOVE
+// =====================
+
+
 
 function moveButton(e){
 
-    if(e){
-        e.preventDefault();
-        e.stopPropagation();
-    }
 
-    const margin = 20;
+if(e){
 
-    const maxX = window.innerWidth - no.offsetWidth - margin;
-    const maxY = window.innerHeight - no.offsetHeight - margin;
+e.preventDefault();
 
-    const x = Math.random() * maxX;
-    const y = Math.random() * maxY;
+e.stopPropagation();
 
-    no.style.left = x + "px";
-    no.style.top = y + "px";
 }
 
+
+
+let margin=20;
+
+
+
+let maxX=window.innerWidth-no.offsetWidth-margin;
+
+let maxY=window.innerHeight-no.offsetHeight-margin;
+
+
+
+let x=Math.random()*maxX;
+
+let y=Math.random()*maxY;
+
+
+
+no.style.left=x+"px";
+
+no.style.top=y+"px";
+
+
+
+}
+
+
+
 // Desktop
-no.addEventListener("mouseenter", moveButton);
 
-// Mobile
-no.addEventListener("touchstart", function(e){
-    moveButton(e);
-}, {passive:false});
 
-// Safety
-no.addEventListener("click", function(e){
-    e.preventDefault();
-    e.stopPropagation();
-    moveButton();
+no.addEventListener("mouseenter",moveButton);
+
+
+
+// Mobile Touch
+
+
+no.addEventListener("touchstart",function(e){
+
+moveButton(e);
+
+
+},{passive:false});
+
+
+
+
+
+// Click Safety
+
+
+no.addEventListener("click",function(e){
+
+
+e.preventDefault();
+
+moveButton();
+
+
 });
 
-// ----------------------
-// Balloons
-// ----------------------
+
+
+
+
+// =====================
+// BALLOONS
+// =====================
+
+
 
 function createBalloons(){
 
-    balloons.innerHTML="";
 
-    const emoji=["🎈","🎈","💖","💕","❤️","💝"];
+balloons.innerHTML="";
 
-    for(let i=0;i<35;i++){
 
-        let b=document.createElement("div");
+let emoji=[
 
-        b.className="balloon";
+"🎈",
+"🎈",
+"💖",
+"💕",
+"❤️",
+"💝"
 
-        b.innerHTML=emoji[Math.floor(Math.random()*emoji.length)];
+];
 
-        b.style.left=Math.random()*100+"%";
 
-        b.style.animationDuration=(3+Math.random()*2)+"s";
 
-        balloons.appendChild(b);
+for(let i=0;i<35;i++){
 
-    }
+
+
+let b=document.createElement("div");
+
+
+
+b.className="balloon";
+
+
+
+b.innerHTML=emoji[Math.floor(Math.random()*emoji.length)];
+
+
+
+b.style.left=Math.random()*100+"%";
+
+
+
+b.style.animationDuration=(3+Math.random()*3)+"s";
+
+
+
+balloons.appendChild(b);
+
+
 
 }
 
-// ----------------------
-// Fireworks
-// ----------------------
+
+
+}
+// =====================
+// FIREWORKS
+// =====================
+
 
 function fireworks(){
 
-    const canvas=document.getElementById("fireworks");
-    const ctx=canvas.getContext("2d");
 
-    canvas.width=window.innerWidth;
-    canvas.height=window.innerHeight;
+const canvas=document.getElementById("fireworks");
 
-    let particles=[];
+const ctx=canvas.getContext("2d");
 
-    for(let i=0;i<180;i++){
 
-        particles.push({
 
-            x:canvas.width/2,
-            y:canvas.height/2,
+canvas.width=window.innerWidth;
 
-            dx:(Math.random()-0.5)*14,
-            dy:(Math.random()-0.5)*14,
+canvas.height=window.innerHeight;
 
-            size:Math.random()*4+2
 
-        });
 
-    }
+let particles=[];
 
-    let timer=setInterval(()=>{
 
-        ctx.clearRect(0,0,canvas.width,canvas.height);
 
-        particles.forEach(p=>{
+for(let i=0;i<150;i++){
 
-            ctx.beginPath();
 
-            ctx.arc(p.x,p.y,p.size,0,Math.PI*2);
+particles.push({
 
-            ctx.fillStyle=`hsl(${Math.random()*360},100%,60%)`;
 
-            ctx.fill();
+x:canvas.width/2,
 
-            p.x+=p.dx;
-            p.y+=p.dy;
+y:canvas.height/2,
 
-        });
 
-    },30);
+dx:(Math.random()-0.5)*12,
 
-    setTimeout(()=>{
+dy:(Math.random()-0.5)*12,
 
-        clearInterval(timer);
 
-        ctx.clearRect(0,0,canvas.width,canvas.height);
+size:Math.random()*3+2
 
-    },2200);
+
+});
+
 
 }
 
-// ----------------------
-// YES
-// ----------------------
+
+
+
+let timer=setInterval(()=>{
+
+
+ctx.clearRect(0,0,canvas.width,canvas.height);
+
+
+
+particles.forEach(p=>{
+
+
+
+ctx.beginPath();
+
+
+
+ctx.arc(
+p.x,
+p.y,
+p.size,
+0,
+Math.PI*2
+);
+
+
+
+ctx.fillStyle=
+"hsl("+Math.random()*360+",100%,60%)";
+
+
+
+ctx.fill();
+
+
+
+p.x+=p.dx;
+
+p.y+=p.dy;
+
+
+
+});
+
+
+
+},30);
+
+
+
+
+
+setTimeout(()=>{
+
+
+clearInterval(timer);
+
+
+ctx.clearRect(
+0,
+0,
+canvas.width,
+canvas.height
+);
+
+
+},2200);
+
+
+
+}
+
+
+
+
+
+// =====================
+// YES BUTTON
+// =====================
+
+
 
 yes.addEventListener("click",function(){
 
-    question.style.display="none";
 
-    animation.style.display="flex";
 
-    bigHeart.classList.add("showHeart");
+question.style.display="none";
 
-    createBalloons();
 
-    fireworks();
 
-    setTimeout(()=>{
+animation.style.display="flex";
 
-        animation.style.display="none";
 
-        result.style.display="flex";
 
-    },3500);
+bigHeart.classList.add("showHeart");
+
+
+
+createBalloons();
+
+
+
+fireworks();
+
+
+
+
+
+setTimeout(()=>{
+
+
+animation.style.display="none";
+
+
+result.style.display="flex";
+
+
+
+},3500);
+
+
 
 });
+
+
+
+
+
+// Screen Resize Fix
+
+
+window.addEventListener("resize",()=>{
+
+
+if(animation.style.display==="flex"){
+
+
+const canvas=document.getElementById("fireworks");
+
+
+canvas.width=window.innerWidth;
+
+canvas.height=window.innerHeight;
+
+
+}
+
+
+
+});
+
+
+
 </script>
 
+
 </body>
+
 </html>
