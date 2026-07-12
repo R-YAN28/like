@@ -207,7 +207,8 @@ opacity:1;
 </div>
 
 <script>
-
+let noMoved = false;
+    
 const yes = document.getElementById("yes");
 const no = document.getElementById("no");
 
@@ -219,7 +220,14 @@ const bigHeart = document.getElementById("bigHeart");
 const balloons = document.getElementById("balloons");
 
 // ---------- No Button Move ----------
-function moveButton(){
+function moveButton(e){
+
+    if(e){
+        e.preventDefault();
+        e.stopPropagation();
+    }
+
+    noMoved = true;
 
     const w = window.innerWidth - no.offsetWidth - 20;
     const h = window.innerHeight - no.offsetHeight - 20;
@@ -227,19 +235,21 @@ function moveButton(){
     no.style.left = Math.random() * w + "px";
     no.style.top = Math.random() * h + "px";
 }
-
+no.addEventListener("mouseover", moveButton);
+no.addEventListener("touchstart", moveButton);
+no.addEventListener("click", moveButton);
 no.addEventListener("mouseover", moveButton);
 
-no.addEventListener("touchstart", function(e){
-    e.preventDefault();
-    moveButton();
-}, { passive: false });
+// no.addEventListener("touchstart", function(e){
+//     e.preventDefault();
+//     moveButton();
+// }, { passive: false });
 
-no.addEventListener("click", function(e){
-    e.preventDefault();
-    e.stopPropagation();
-    moveButton();
-});
+// no.addEventListener("click", function(e){
+//     e.preventDefault();
+//     e.stopPropagation();
+//     moveButton();
+// });
 
 // ---------- Balloon ----------
 function createBalloons(){
@@ -325,21 +335,29 @@ function fireworks(){
 }
 
 // ---------- YES ----------
-yes.onclick=()=>{
+    yes.onclick = function(){
 
-    question.style.display="none";
+    if(noMoved){
+        noMoved = false;
+    }
 
-    animation.style.display="flex";
+    // અહીં તારો animation code
+}
+// yes.onclick=()=>{
 
-    setTimeout(()=>{
+//     question.style.display="none";
 
-        bigHeart.classList.add("showHeart");
+//     animation.style.display="flex";
 
-        createBalloons();
+//     setTimeout(()=>{
 
-        fireworks();
+//         bigHeart.classList.add("showHeart");
 
-    },100);
+//         createBalloons();
+
+//         fireworks();
+
+//     },100);
 
     setTimeout(()=>{
 
