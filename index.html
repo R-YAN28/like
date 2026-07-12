@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+    <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -59,8 +59,8 @@ button{
 }
 
 #yes{
-    background:#ff5d8f;
-    color:#fff;
+    position:relative;
+    z-index:1;
 }
 
 #yes:hover{
@@ -68,9 +68,8 @@ button{
 }
 
 #no{
-    background:#ff3f63;
-    color:#fff;
     position:fixed;
+    z-index:1000;
 }
 
 /* ---------- Big Heart ---------- */
@@ -235,10 +234,34 @@ function moveButton(e){
     no.style.left = Math.random() * w + "px";
     no.style.top = Math.random() * h + "px";
 }
-no.addEventListener("mouseover", moveButton);
-no.addEventListener("touchstart", moveButton);
-no.addEventListener("click", moveButton);
-no.addEventListener("mouseover", moveButton);
+
+let canClickYes = true;
+
+no.addEventListener("pointerdown", function(e){
+    e.preventDefault();
+    e.stopPropagation();
+
+    canClickYes = false;
+    moveButton();
+
+    setTimeout(()=>{
+        canClickYes = true;
+    },500);
+});
+
+yes.addEventListener("click", function(e){
+
+    if(!canClickYes){
+        e.preventDefault();
+        return;
+    }
+
+    // અહીં તારો animation code
+});
+// no.addEventListener("mouseover", moveButton);
+// no.addEventListener("touchstart", moveButton);
+// no.addEventListener("click", moveButton);
+// no.addEventListener("mouseover", moveButton);
 
 // no.addEventListener("touchstart", function(e){
 //     e.preventDefault();
