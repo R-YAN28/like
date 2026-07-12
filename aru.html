@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Do You Love Me ❤️</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial,sans-serif;
+}
+
+body{
+    background:#ffdbe8;
+    overflow:hidden;
+}
+
+.screen{
+    width:100%;
+    height:100vh;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+}
+
+#animation,
+#result{
+    display:none;
+}
+
+.bear{
+    width:220px;
+    border-radius:15px;
+    margin-bottom:20px;
+}
+
+h1{
+    font-size:42px;
+    color:#444;
+    margin-bottom:30px;
+}
+
+.buttons{
+    display:flex;
+    gap:20px;
+}
+
+button{
+    padding:12px 35px;
+    border:none;
+    border-radius:40px;
+    font-size:20px;
+    cursor:pointer;
+    transition:.3s;
+}
+
+#yes{
+    background:#ff5d8f;
+    color:#fff;
+}
+
+#yes:hover{
+    transform:scale(1.08);
+}
+
+#no{
+    background:#ff3f63;
+    color:#fff;
+    position:fixed;
+}
+
+/* ---------- Big Heart ---------- */
+
+#bigHeart{
+    font-size:40px;
+    opacity:0;
+}
+
+.showHeart{
+    animation:heartPop 2s forwards;
+}
+
+@keyframes heartPop{
+
+0%{
+transform:scale(0);
+opacity:0;
+}
+
+20%{
+opacity:1;
+transform:scale(1);
+}
+
+50%{
+transform:scale(2);
+}
+
+100%{
+transform:scale(4);
+opacity:0;
+}
+
+}
+
+/* ---------- Balloons ---------- */
+
+.balloon{
+    position:absolute;
+    bottom:-120px;
+    font-size:45px;
+    animation:flyBalloon 5s linear forwards;
+}
+
+@keyframes flyBalloon{
+
+0%{
+transform:translateY(0);
+opacity:1;
+}
+
+100%{
+transform:translateY(-120vh);
+opacity:0;
+}
+
+}
+
+/* ---------- Fireworks ---------- */
+
+#fireworks{
+    position:absolute;
+    width:100%;
+    height:100%;
+    left:0;
+    top:0;
+    pointer-events:none;
+}
+
+/* ---------- Result ---------- */
+
+#result h1{
+    animation:zoom .8s;
+}
+
+@keyframes zoom{
+
+0%{
+transform:scale(.3);
+opacity:0;
+}
+
+100%{
+transform:scale(1);
+opacity:1;
+}
+
+}
+
+</style>
+
+</head>
+<body>
+
+<!-- Question Screen -->
+<div id="question" class="screen">
+
+    <video class="bear" autoplay muted loop playsinline>
+        <source src="bear1.mp4" type="video/mp4">
+    </video>
+
+    <h1>Do You Love Me? ❤️</h1>
+
+    <div class="buttons">
+        <button id="yes">Yes</button>
+        <button id="no">No</button>
+    </div>
+
+</div>
+
+<!-- Animation Screen -->
+
+<div id="animation" class="screen">
+
+    <div id="bigHeart">❤️</div>
+
+    <div id="balloons"></div>
+
+    <canvas id="fireworks"></canvas>
+
+</div>
+
+<!-- Result Screen -->
+
+<div id="result" class="screen">
+
+    <video class="bear" autoplay muted loop playsinline>
+        <source src="bear2.mp4" type="video/mp4">
+    </video>
+
+    <h1>I Knew It Nehuu! 😍❤️</h1>
+
+</div>
+
+<script>
+
+const yes = document.getElementById("yes");
+const no = document.getElementById("no");
+
+const question = document.getElementById("question");
+const animation = document.getElementById("animation");
+const result = document.getElementById("result");
+
+const bigHeart = document.getElementById("bigHeart");
+const balloons = document.getElementById("balloons");
+
+// ---------- No Button Move ----------
+function moveButton(){
+
+    const w = window.innerWidth - no.offsetWidth - 20;
+    const h = window.innerHeight - no.offsetHeight - 20;
+
+    no.style.left = Math.random() * w + "px";
+    no.style.top = Math.random() * h + "px";
+}
+
+no.addEventListener("mouseover", moveButton);
+no.addEventListener("click", moveButton);
+
+// ---------- Balloon ----------
+function createBalloons(){
+
+    const emoji = ["🎈","🎈","🎈","💖","💕","❤️"];
+
+    for(let i=0;i<30;i++){
+
+        const b = document.createElement("div");
+
+        b.className = "balloon";
+        b.innerHTML = emoji[Math.floor(Math.random()*emoji.length)];
+
+        b.style.left = Math.random()*100 + "%";
+        b.style.animationDuration = (3+Math.random()*2)+"s";
+
+        balloons.appendChild(b);
+
+        setTimeout(()=>{
+            b.remove();
+        },5000);
+
+    }
+
+}
+
+// ---------- Fireworks ----------
+function fireworks(){
+
+    const canvas=document.getElementById("fireworks");
+    const ctx=canvas.getContext("2d");
+
+    canvas.width=window.innerWidth;
+    canvas.height=window.innerHeight;
+
+    let particles=[];
+
+    for(let i=0;i<180;i++){
+
+        particles.push({
+
+            x:canvas.width/2,
+            y:canvas.height/2,
+
+            dx:(Math.random()-0.5)*12,
+            dy:(Math.random()-0.5)*12,
+
+            size:Math.random()*4+2
+
+        });
+
+    }
+
+    function draw(){
+
+        ctx.clearRect(0,0,canvas.width,canvas.height);
+
+        particles.forEach(p=>{
+
+            ctx.beginPath();
+
+            ctx.arc(p.x,p.y,p.size,0,Math.PI*2);
+
+            ctx.fillStyle=
+            `hsl(${Math.random()*360},100%,60%)`;
+
+            ctx.fill();
+
+            p.x+=p.dx;
+            p.y+=p.dy;
+
+        });
+
+    }
+
+    let id=setInterval(draw,30);
+
+    setTimeout(()=>{
+        clearInterval(id);
+        ctx.clearRect(0,0,canvas.width,canvas.height);
+    },2000);
+
+}
+
+// ---------- YES ----------
+yes.onclick=()=>{
+
+    question.style.display="none";
+
+    animation.style.display="flex";
+
+    setTimeout(()=>{
+
+        bigHeart.classList.add("showHeart");
+
+        createBalloons();
+
+        fireworks();
+
+    },100);
+
+    setTimeout(()=>{
+
+        animation.style.display="none";
+
+        result.style.display="flex";
+
+    },3500);
+
+};
+</script>
+
+</body>
+</html>
